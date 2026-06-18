@@ -8,6 +8,8 @@ public class PageResult<T> {
     private int size;
     private List<T> list;
 
+    public PageResult() {}  // Jackson 反序列化需要无参构造
+
     public PageResult(long total, int page, int size, List<T> list) {
         this.total = total;
         this.page = page;

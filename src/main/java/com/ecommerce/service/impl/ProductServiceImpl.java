@@ -9,6 +9,9 @@ import com.ecommerce.mapper.ProductMapper;
 import com.ecommerce.service.ProductService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
@@ -22,13 +25,16 @@ import static com.ecommerce.utils.RedisConstants.*;
 @Service
 public class ProductServiceImpl implements ProductService {
 
+    private static final Logger log = LoggerFactory.getLogger(ProductServiceImpl.class);
+
     @Autowired
     private ProductMapper productMapper;
 
     @Autowired
     private StringRedisTemplate stringRedisTemplate;
 
-    private static final ObjectMapper MAPPER = new ObjectMapper();
+    private static final ObjectMapper MAPPER = new ObjectMapper()
+            .registerModule(new JavaTimeModule());
 
     // ==================== 分页查询 ====================
 
@@ -65,7 +71,7 @@ public class ProductServiceImpl implements ProductService {
             stringRedisTemplate.opsForValue().set(
                     pageKey, MAPPER.writeValueAsString(result),
                     CACHE_PRODUCT_PAGE_TTL, TimeUnit.MINUTES);
-        } catch (JsonProcessingException ignored) {}
+        } catch (JsonProcessingException e) { log.warn("缓存序列化失败: {}", e.getMessage()); }
 
         return result;
     }
@@ -102,7 +108,7 @@ public class ProductServiceImpl implements ProductService {
         try {
             stringRedisTemplate.opsForValue().set(key, MAPPER.writeValueAsString(product),
                     CACHE_PRODUCT_TTL, TimeUnit.MINUTES);
-        } catch (JsonProcessingException ignored) {}
+        } catch (JsonProcessingException e) { log.warn("缓存序列化失败: {}", e.getMessage()); }
 
         return product;
     }
@@ -165,7 +171,7 @@ public class ProductServiceImpl implements ProductService {
             String key = CACHE_PRODUCT_KEY + product.getId();
             stringRedisTemplate.opsForValue().set(key, MAPPER.writeValueAsString(product),
                     CACHE_PRODUCT_TTL, TimeUnit.MINUTES);
-        } catch (JsonProcessingException ignored) {}
+        } catch (JsonProcessingException e) { log.warn("缓存序列化失败: {}", e.getMessage()); }
     }
 
     /**

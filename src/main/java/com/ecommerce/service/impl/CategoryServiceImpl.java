@@ -8,6 +8,7 @@ import com.ecommerce.mapper.CategoryMapper;
 import com.ecommerce.service.CategoryService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
@@ -29,7 +30,8 @@ public class CategoryServiceImpl implements CategoryService {
     @Autowired
     private StringRedisTemplate stringRedisTemplate;
 
-    private static final ObjectMapper MAPPER = new ObjectMapper();
+    private static final ObjectMapper MAPPER = new ObjectMapper()
+            .registerModule(new JavaTimeModule());
 
     @Override
     public List<CategoryVO> listAsTree() {
