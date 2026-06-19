@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourcePerFileMappings">
+    <file url="file://$PROJECT_DIR$/seed-products.sql" value="3db6c64f-f018-4e3b-b1aa-90184a9ae3a8" />
     <file url="file://$PROJECT_DIR$/src/main/java/com/ecommerce/mapper/CartItemMapper.java" value="3db6c64f-f018-4e3b-b1aa-90184a9ae3a8" />
     <file url="file://$PROJECT_DIR$/src/main/java/com/ecommerce/mapper/CartMapper.java" value="3db6c64f-f018-4e3b-b1aa-90184a9ae3a8" />
     <file url="file://$PROJECT_DIR$/src/main/java/com/ecommerce/mapper/CategoryMapper.java" value="3db6c64f-f018-4e3b-b1aa-90184a9ae3a8" />

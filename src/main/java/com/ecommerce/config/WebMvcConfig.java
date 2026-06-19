@@ -31,7 +31,11 @@ public class WebMvcConfig implements WebMvcConfigurer {
         registry.addInterceptor(authInterceptor)
                 .addPathPatterns(
                         "/api/cart/**",
-                        "/api/orders/**"
+                        "/api/orders/**",
+                        "/api/products"      // POST 新增
+                )
+                .addPathPatterns(
+                        "/api/products/*"    // PUT/DELETE 修改删除（不拦截 GET）
                 );
     }
 }

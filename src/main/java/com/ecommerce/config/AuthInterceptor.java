@@ -86,6 +86,7 @@ public class AuthInterceptor implements HandlerInterceptor {
         UserDTO userDTO = new UserDTO();
         userDTO.setId(userId);
         userDTO.setNickname((String) userMap.get("nickname"));
+        userDTO.setRole((String) userMap.getOrDefault("role", "buyer"));
         UserHolder.saveUser(userDTO);
 
         return true;

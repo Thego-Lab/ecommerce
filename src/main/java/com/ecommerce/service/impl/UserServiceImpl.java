@@ -46,6 +46,7 @@ public class UserServiceImpl implements UserService {
         user.setUsername(request.getUsername());
         user.setPassword(request.getPassword());
         user.setNickname(request.getNickname() != null ? request.getNickname() : request.getUsername());
+        user.setRole("buyer");  // 默认买家
         userMapper.insert(user);
     }
 
@@ -69,6 +70,7 @@ public class UserServiceImpl implements UserService {
         Map<String, String> userMap = new HashMap<>();
         userMap.put("id", user.getId().toString());
         userMap.put("nickname", user.getNickname() != null ? user.getNickname() : "");
+        userMap.put("role", user.getRole() != null ? user.getRole() : "buyer");
         userMap.put("token", token);
         stringRedisTemplate.opsForHash().putAll(key, userMap);
         stringRedisTemplate.expire(key, LOGIN_USER_TTL, TimeUnit.MINUTES);
@@ -79,6 +81,7 @@ public class UserServiceImpl implements UserService {
         response.setToken(token);
         response.setUsername(user.getUsername());
         response.setNickname(user.getNickname());
+        response.setRole(user.getRole() != null ? user.getRole() : "buyer");
         return response;
     }
 }
