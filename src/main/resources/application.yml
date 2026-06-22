@@ -1,6 +1,7 @@
 server:
   port: 8080
 
+
 spring:
   servlet:
     multipart:
@@ -48,3 +49,5 @@ mybatis:
     map-underscore-to-camel-case: true
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
   type-aliases-package: com.ecommerce.entity
+
+
